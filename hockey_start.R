@@ -9,6 +9,7 @@ help(hockey) # describes the hockey data and shows an example regression
 
 data(hockey) # load the data
 
+# Q1
 # Combine the covariates all together
 x <- cBind(config,team,player) # cBind binds together two sparse matrices
 
@@ -30,6 +31,6 @@ Bbic <- coef(nhlreg, select=which.min(BIC(nhlreg)))
 # Q3 add in the cross validation gammo lasso
 
 cv.nhlreg <- cv.gamlr(x, y,
-  free=1:(ncol(config)+ncol(team)), ## free denotes unpenalized columns
+  free=1:(ncol(config)+ncol(team)),
   family="binomial", standardize=FALSE)
 

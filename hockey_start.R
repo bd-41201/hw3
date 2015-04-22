@@ -26,7 +26,7 @@ Baicc <- coef(nhlreg)[colnames(player),]
 
 # BIC selection
 # We see that under BIC, the players have no effect only the configuration and the team season
-Bbic <- coef(nhlreg, select=which.min(BIC(nhlreg)))
+Bbic <- coef(nhlreg, select=which.min(BIC(nhlreg)))[colnames(player),]
 
 # Q3 add in the cross validation gammo lasso
 
@@ -34,3 +34,14 @@ cv.nhlreg <- cv.gamlr(x, y,
   free=1:(ncol(config)+ncol(team)),
   family="binomial", standardize=FALSE)
 
+ll <- log(nhlreg$lambda)
+
+plot(nhlreg, col="grey")
+abline(v=ll[which.min(AICc(nhlreg))], col="black", lty=2)
+abline(v=ll[which.min(AIC(nhlreg))], col="orange", lty=2)
+abline(v=ll[which.min(BIC(nhlreg))], col="green", lty=2)
+abline(v=log(cv.nhlreg$lambda.min), col="blue", lty=2)
+abline(v=log(cv.nhlreg$lambda.1se), col="purple", lty=2)
+legend("topright", bty="n", lwd=1,
+  col=c("black","orange","green","blue","purple"),
+  legend=c("AICc","AIC","BIC","CV.min","CV.1se"))

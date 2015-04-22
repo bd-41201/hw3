@@ -9,7 +9,7 @@ help(hockey) # describes the hockey data and shows an example regression
 
 data(hockey) # load the data
 
-#--------------------------------------------------------- Q1
+
 # Combine the covariates all together
 x <- cBind(config,team,player) # cBind binds together two sparse matrices
 
@@ -23,6 +23,8 @@ nhlreg <- gamlr(x, y,
 ## coefficients (grab only the players)
 # AICc selection
 Baicc <- coef(nhlreg)[colnames(player),]
+
+#--------------------------------------------------------- Q1
 B  <-coef(nhlreg) [-1,]
 B[c(which.min(B),which.max(B))]
 

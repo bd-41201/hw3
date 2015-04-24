@@ -24,6 +24,25 @@ nhlreg <- gamlr(x, y,
 # AICc selection
 Baicc <- coef(nhlreg)[colnames(player),]
 
+# Team coefficients
+Baicc_team <- coef(nhlreg)[colnames(team),]
+top_bottom_team <- Baicc_team[c(which.min(Baicc_team),which.max(Baicc_team))]
+# top_bottom_team
+# ~> NYI.20112012 TBL.20032004
+# ~> -0.6835273    1.3035036
+# exp(top_bottom_team)
+# ~> NYI.20112012 TBL.20032004
+# ~>   0.5048332    3.6821749
+# 1/0.5048332
+# ~> [1] 1.980852
+
+# Intercept
+intercept <- coef(nhlreg)[1]
+# intercept
+# ~> [1] 0.07913862
+# exp(intercept)
+# ~> [1] 1.082354
+
 # BIC selection
 # We see that under BIC, the players have no effect only the configuration and the team season
 Bbic <- coef(nhlreg, select=which.min(BIC(nhlreg)))[colnames(player),]
